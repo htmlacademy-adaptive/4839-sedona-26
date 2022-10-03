@@ -13,11 +13,16 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '16.x'
-		  
+
+      - name: '1'
+        run: 'ls -la'
+
       - name: install
         run: |
           npm install
-		  
+
       - name: build
         run: |
           npm run build
+      - name: '1'
+        run: 'ls -la'
