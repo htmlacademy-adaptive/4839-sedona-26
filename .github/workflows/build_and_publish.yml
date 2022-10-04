@@ -30,7 +30,7 @@ jobs:
       - name: Publish
         run: |
           git config --global user.name "Keks"
-          git config --global user.email "keks@example.com"
+          git config --global user.email "keks@htmlacademy.ru"
           git fetch --all
           if ! git checkout -t origin/gh-pages
           then
@@ -40,6 +40,6 @@ jobs:
           rm -rf ${{ github.run_number }}
           mv build ${{ github.run_number }}
           git add ${{ github.run_number }}
-          git commit -m '✔️ Сборка [${{ github.run_number }}](https://choorganization.github.io/4839-sedona-26/${{ github.run_number }}/)'
+          git commit -m '✔️ Сборка #xxx'
           git push -u origin gh-pages
           
