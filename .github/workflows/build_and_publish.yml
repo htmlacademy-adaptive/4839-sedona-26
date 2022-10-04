@@ -50,6 +50,6 @@ jobs:
           rm -rf ${{ github.run_number }}
           mv build ${{ github.run_number }}
           git add ${{ github.run_number }}
-          git commit -m 'Publish'
+          git commit -m '✔️ Сборка'
           git push -u origin $branch
           
