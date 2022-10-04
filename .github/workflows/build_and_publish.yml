@@ -4,10 +4,6 @@ on:
   - push
   - pull_request
 
-env:
-  branch: gh-pages
-  NODE_ENV: development
-
 jobs:
   start:
     runs-on: ubuntu-latest
@@ -20,7 +16,7 @@ jobs:
 
       - name: Build
         run: |
-          NODE_ENV=$NODE_ENV npm install && npm run build
+          NODE_ENV=development npm install && npm run build
           if [[ $(ls | grep '^build$') == '' ]]
           then
             mkdir build
@@ -36,14 +32,14 @@ jobs:
           git config --global user.name "Keks"
           git config --global user.email "keks@example.com"
           git fetch --all
-          if ! git checkout -t origin/$branch
+          if ! git checkout -t origin/gh-pages
           then
-            git checkout --orphan $branch
+            git checkout --orphan gh-pages
             git rm -rf .
           fi
           rm -rf ${{ github.run_number }}
           mv build ${{ github.run_number }}
           git add ${{ github.run_number }}
           git commit -m '✔️ Сборка'
-          git push -u origin $branch
+          git push -u origin gh-pages
           
