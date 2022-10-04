@@ -24,6 +24,12 @@ jobs:
       - name: Build
         run: |
           npm run build
+          
+      - name: TESTS
+        run: |
+          ls -la
+          echo '============================================'
+          git branch
       
       - name: Publish
         run: |
@@ -39,8 +45,3 @@ jobs:
           git commit -m 'Publish'
           git push -u origin $branch
           
-      - name: TESTS
-        run: |
-          ls -la
-          echo '============================================'
-          git branch
