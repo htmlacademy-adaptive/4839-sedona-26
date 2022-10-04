@@ -13,20 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Create branch
-        run: |
-          if ! git show-ref --verify --quiet refs/heads/$branch
-            then
-            git config --global user.email "you@example.com"
-            git config --global user.name "Your Name"
-            git checkout --orphan $branch
-            git rm -rf .
-            echo $branch > README.md
-            git add --all
-            git commit -m 'Initial commit'
-            git checkout master
-          fi
-
       - uses: actions/setup-node@v1
         with:
           node-version: '16.x'
@@ -38,6 +24,19 @@ jobs:
       - name: Build
         run: |
           npm run build
+      
+      - name: Publish
+        run: |
+          if git show-ref --verify --quiet refs/heads/$branch
+          then
+            git checkout $branch
+          else
+            git checkout --orphan $branch
+            git rm -rf .
+          fi
+          git add --all
+          git commit -m 'Publish'
+          git push -u origin $branch
           
       - name: TESTS
         run: |
