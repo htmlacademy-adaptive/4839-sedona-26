@@ -20,7 +20,7 @@ jobs:
 
       - name: Build
         run: |
-          NODE_ENV=$NODE_ENV packrat npm install && npm run build
+          NODE_ENV=$NODE_ENV npm install && npm run build
           
       - name: TESTS
         run: |
