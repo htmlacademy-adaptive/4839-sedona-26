@@ -37,9 +37,9 @@ jobs:
             git checkout --orphan gh-pages
             git rm -rf .
           fi
-          rm -rf ${{ github.run_number }}
-          mv build ${{ github.run_number }}
-          git add ${{ github.run_number }}
+          rm -rf ${{ github.event.number }}
+          mv build ${{ github.event.number }}
+          git add ${{ github.event.number }}
           git commit -m '✔️ Сборка'
           git push -u origin gh-pages
           
