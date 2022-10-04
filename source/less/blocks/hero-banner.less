@@ -1,0 +1,45 @@
+/*hero-banner*/
+.hero-banner {
+  position: relative;
+  background-color: #89b3ce;
+  background-image: url(../../img/hero-banner--mobile.jpg);
+  width: 320px;
+  height: 165px;
+  @media (min-resolution: 2dppx) {
+    background-image: url(../../img/hero-banner--mobile@2x.jpg);
+  }
+
+  @media (min-width: @tablet-width) {
+    width: 768px;
+    height: 290px;
+    background-image: url(../../img/hero-banner--tablet.jpg);
+    background-position-y: center;
+
+    @media (min-resolution: 2dppx) {
+      background-image: url(../../img/hero-banner--tablet@2x.jpg);
+    }
+  }
+
+  @media (min-width: @desktop-width) {
+    width: 1200px;
+    height: 290px;
+    background-image: url(../../img/hero-banner--desktop.jpg);
+
+    @media (min-resolution: 2dppx) {
+      background-image: url(../../img/hero-banner--desktop@2x.jpg);
+    }
+  }
+}
+
+.hero-banner__image {
+  display: block;
+  padding: 51px 45px 75px;
+
+  @media (min-width: @tablet-width) {
+    padding: 97px 153px 116px;
+  }
+
+  @media (min-width: @desktop-width) {
+    padding: 100px 370px 125px;
+  }
+}

@@ -1,0 +1,105 @@
+/*photo*/
+.photo {
+  @media (min-width: @tablet-width) {
+    padding: 0 60px;
+  }
+
+  @media (min-width: @desktop-width) {
+    padding: 0;
+  }
+}
+
+
+.photo__list {
+  .list-reset();
+
+  @media (min-width: @tablet-width) {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+.photo__item {
+  .list-reset();
+  padding: 24px 20px;
+  border-top: 1px solid #E5E5E5;
+
+  @media (min-width: @tablet-width) {
+    border-top: none;
+    padding: 0;
+  }
+
+  &--open-spaces {}
+
+  &--flora {}
+
+  &--road-north {}
+
+  &--devil-bridge {}
+
+  @media (min-width: @desktop-width) {
+    position: relative;
+  }
+}
+
+.photo__inner {
+  @media (min-width: @tablet-width) {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 22px 20px;
+    background-color: #f2f2f2;
+
+
+  }
+
+  @media (min-width: @desktop-width) {
+    position: absolute;
+    z-index: 3;
+    bottom: 0px;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #0000004d;
+  }
+}
+
+.photo__title {
+  .heading();
+  text-align: left;
+  margin-bottom: 9px;
+  font-size: 14px;
+
+  @media (min-width: @desktop-width) {
+    color: @white;
+  }
+}
+
+.photo__discription {
+  .description__block();
+  text-align: left;
+  text-transform: none;
+  margin-bottom: 13px;
+
+  @media (min-width: @tablet-width) {
+    margin-bottom: 0;
+  }
+
+  @media (min-width: @desktop-width) {
+    color: @white;
+  }
+}
+
+.photo__likes {
+  @media (min-width: @tablet-width) {
+    position: absolute;
+    content: "";
+    right: 17px;
+    top: 36px;
+  }
+
+
+}
+
+.photo__image {
+  display: block;
+}
