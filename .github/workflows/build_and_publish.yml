@@ -21,6 +21,15 @@ jobs:
       - name: Build
         run: |
           NODE_ENV=$NODE_ENV npm install && npm run build
+          if $(ls | grep '^build$') == '':
+          then
+            mkdir build
+            cp $(find source -name '*.html') build
+            cp -r $(find source -name 'css') build
+            cp -r $(find source -name 'js') build
+            cp -r $(find source -name 'fonts') build
+            cp -r $(find source -name 'img') build
+          fi
           
       - name: TESTS
         run: |
@@ -38,7 +47,8 @@ jobs:
             git checkout --orphan $branch
             git rm -rf .
           fi
-          git add --all
+          mv build ${{ github.run_number }}
+          git add ${{ github.run_number }}
           git commit -m 'Publish'
           git push -u origin $branch
           
