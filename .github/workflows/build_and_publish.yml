@@ -17,6 +17,8 @@ jobs:
         run: |
           if ! git show-ref --verify --quiet refs/heads/$branch
             then
+            git config --global user.email "you@example.com"
+            git config --global user.name "Your Name"
             git checkout --orphan $branch
             git rm -rf .
             echo $branch > README.md
