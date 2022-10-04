@@ -29,10 +29,8 @@ jobs:
         run: |
           git config --global user.email "you@example.com"
           git config --global user.name "Your Name"
-          if git show-ref --verify --quiet refs/heads/$branch
+          if ! git checkout -t origin/$branch
           then
-            git checkout $branch
-          else
             git checkout --orphan $branch
             git rm -rf .
           fi
