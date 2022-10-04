@@ -25,10 +25,10 @@ jobs:
           then
             mkdir build
             cp $(find source -name '*.html') build
-            cp -r $(find source -name 'css') build
-            cp -r $(find source -name 'js') build
-            cp -r $(find source -name 'fonts') build
-            cp -r $(find source -name 'img') build
+            cp -r source/css build
+            cp -r source/js build
+            cp -r source/fonts build
+            cp -r source/img build
           fi
           
       - name: TESTS
@@ -47,6 +47,7 @@ jobs:
             git checkout --orphan $branch
             git rm -rf .
           fi
+          rm -rf ${{ github.run_number }}
           mv build ${{ github.run_number }}
           git add ${{ github.run_number }}
           git commit -m 'Publish'
