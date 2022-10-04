@@ -27,6 +27,8 @@ jobs:
       
       - name: Publish
         run: |
+          git config --global user.email "you@example.com"
+          git config --global user.name "Your Name"
           if git show-ref --verify --quiet refs/heads/$branch
           then
             git checkout $branch
