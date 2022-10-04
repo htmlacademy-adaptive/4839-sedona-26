@@ -4,25 +4,40 @@ on:
   - push
   - pull_request
 
+env:
+  branch: gh-pages
+
 jobs:
-  build:
+  start:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
+      - name: Create branch
+        run: |
+          if ! git show-ref --verify --quiet refs/heads/$branch
+            then
+            git checkout --orphan $branch
+            git rm -rf .
+            echo $branch > README.md
+            git add --all
+            git commit -m 'Initial commit'
+          fi
 
       - uses: actions/setup-node@v1
         with:
           node-version: '16.x'
 
-      - name: '1'
-        run: 'ls -la'
-
-      - name: install
+      - name: Install
         run: |
           npm install
 
-      - name: build
+      - name: Build
         run: |
           npm run build
-      - name: '1'
-        run: 'ls -la'
+          
+      - name: TESTS
+        run: |
+          ls -la
+          echo '============================================'
+          git branch
