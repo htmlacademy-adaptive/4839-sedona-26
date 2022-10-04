@@ -6,6 +6,7 @@ on:
 
 env:
   branch: gh-pages
+  NODE_ENV: development
 
 jobs:
   start:
@@ -17,13 +18,9 @@ jobs:
         with:
           node-version: '16.x'
 
-      - name: Install
-        run: |
-          npm install
-
       - name: Build
         run: |
-          npm run build
+          NODE_ENV=$NODE_ENV packrat npm install && npm run build
           
       - name: TESTS
         run: |
