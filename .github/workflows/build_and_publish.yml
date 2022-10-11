@@ -1,0 +1,43 @@
+name: build_and_publish
+
+on:
+  - pull_request
+
+jobs:
+  start:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+
+      - name: Build
+        run: |
+          NODE_ENV=development npm install && npm run build
+          if [[ $(ls -1 | grep '^build$') == '' ]]
+          then
+            mkdir build
+            cp $(find source -name '*.html') build
+            cp -r source/css build
+            cp -r source/js build
+            cp -r source/fonts build
+            cp -r source/img build
+          fi
+      
+      - name: Publish
+        run: |
+          git config --global user.name "Keks"
+          git config --global user.email "keks@htmlacademy.ru"
+          git fetch --all
+          if ! git checkout -t origin/gh-pages
+          then
+            git checkout --orphan gh-pages
+            git rm -rf .
+          fi
+          rm -rf ${{ github.event.number }}
+          mv build ${{ github.event.number }}
+          git add ${{ github.event.number }}
+          git commit -m "✔️ Сборка #${{ github.event.number }}"
+          git push -u origin gh-pages
