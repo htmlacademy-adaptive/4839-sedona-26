@@ -16,7 +16,7 @@ jobs:
       - name: Build
         run: |
           NODE_ENV=development npm install && npm run build
-          if [[ $(ls -1 | grep '^build$') == '' ]]
+          if [[ $(find . -type d -name 'build') == '' ]]
           then
             mkdir build
             cp $(find source -name '*.html') build
