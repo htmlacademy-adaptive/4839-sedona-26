@@ -16,9 +16,6 @@ jobs:
       - name: Build
         run: |
           NODE_ENV=development npm install && npm run build
-          echo '========================='
-          find . -type d -name 'build'
-          echo '========================='
           if [[ $(find . -maxdepth 1 -type d -name 'build') == '' ]]
           then
             mkdir build
