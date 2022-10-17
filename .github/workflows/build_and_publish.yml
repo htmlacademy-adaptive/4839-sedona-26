@@ -30,7 +30,7 @@ jobs:
         run: |
           git config --global user.name "Keks"
           git config --global user.email "keks@htmlacademy.ru"
-          git remote -v
+          git remote add origin "https://${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git"
           git fetch --all
           if ! git checkout -t origin/gh-pages
           then
