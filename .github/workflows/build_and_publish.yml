@@ -1,7 +1,6 @@
 name: build_and_publish
 
 on:
-#  - push
   - pull_request
 
 jobs:
@@ -17,7 +16,7 @@ jobs:
       - name: Build
         run: |
           NODE_ENV=development npm install && npm run build
-          if [[ $(ls -1 | grep '^build$') == '' ]]
+          if [[ $(find . -maxdepth 1 -type d -name 'build') == '' ]]
           then
             mkdir build
             cp $(find source -name '*.html') build
@@ -40,6 +39,9 @@ jobs:
           rm -rf ${{ github.event.number }}
           mv build ${{ github.event.number }}
           git add ${{ github.event.number }}
-          git commit -m "✔️ Сборка #${{ github.event.number }}"
-          git push -u origin gh-pages
-          
+          if git commit -m "✔️ Сборка #${{ github.event.number }}"
+          then
+            git push -u origin gh-pages
+          else
+            echo 'Nothing to commit and push'
+          fi
