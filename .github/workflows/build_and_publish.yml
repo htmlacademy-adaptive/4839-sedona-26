@@ -38,6 +38,7 @@ jobs:
           fi
           rm -rf ${{ github.event.number }}
           mv build ${{ github.event.number }}
+          ls -la
           git add ${{ github.event.number }}
           if git commit -m "✔️ Сборка #${{ github.event.number }}"
           then
