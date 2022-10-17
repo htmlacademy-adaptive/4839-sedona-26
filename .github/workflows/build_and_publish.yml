@@ -30,7 +30,8 @@ jobs:
         run: |
           git config --global user.name "Keks"
           git config --global user.email "keks@htmlacademy.ru"
-          git config --global -e
+          git config user.name "Keks"
+          git config credential.username "Keks"
           git fetch --all
           if ! git checkout -t origin/gh-pages
           then
