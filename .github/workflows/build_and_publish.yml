@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.MY_TOKEN }}
 
       - uses: actions/setup-node@v1
         with:
@@ -30,8 +32,6 @@ jobs:
         run: |
           git config --global user.name "Keks"
           git config --global user.email "keks@htmlacademy.ru"
-          git config user.name "Keks"
-          git config credential.username "Keks"
           git fetch --all
           if ! git checkout -t origin/gh-pages
           then
