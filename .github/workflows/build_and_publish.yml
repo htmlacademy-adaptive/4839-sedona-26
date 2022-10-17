@@ -25,11 +25,11 @@ jobs:
             cp -r source/fonts build
             cp -r source/img build
           fi
-      
+
       - name: Publish
         run: |
-          git config --global user.name "Keks"
-          git config --global user.email "keks@htmlacademy.ru"
+          git config --global user.name "Keksobot"
+          git config --global user.email "github+keksobot@htmlacademy.ru"
           git fetch --all
           if ! git checkout -t origin/gh-pages
           then
