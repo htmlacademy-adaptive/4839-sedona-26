@@ -2,9 +2,10 @@ name: publish
 
 on:
   workflow_run:
-    workflows: ["build"]
+    workflows:
+      - build
     types:
-      - completed
+      - requested
 
 jobs:
   start_publish:
