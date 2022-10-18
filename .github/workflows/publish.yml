@@ -23,7 +23,7 @@ jobs:
       - name: publish
         run: |
           echo "============="
-          ls -la
+          echo "${{ github.event.workflow_run.workflow_id }}"
           echo "============="
           git config --global user.name "Keks"
           git config --global user.email "keks@htmlacademy.ru"
