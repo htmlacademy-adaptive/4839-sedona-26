@@ -22,7 +22,7 @@ jobs:
       - name: publish
         run: |
           echo "============="
-          ls -la
+          find / -type f -name build.zip
           echo "============="
           git config --global user.name "Keks"
           git config --global user.email "keks@htmlacademy.ru"
