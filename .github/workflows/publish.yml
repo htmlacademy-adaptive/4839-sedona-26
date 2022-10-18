@@ -28,7 +28,7 @@ jobs:
 
       - name: publish
         run: |
-	  pr_number=$(cat env | grep "prev.event.number" | awk -F '=' '{print $2}')
+          pr_number=$(cat env | grep "prev.event.number" | awk -F '=' '{print $2}')
           git config --global user.name "Keks"
           git config --global user.email "keks@htmlacademy.ru"
           git fetch --all
