@@ -1,13 +1,13 @@
-name: Publish
+name: publish
 
 on:
   workflow_run:
-    workflows: [Build]
+    workflows: [build]
     types:
       - completed
 
 jobs:
-  Start_publish:
+  start_publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -17,7 +17,7 @@ jobs:
           name: build
           path: build
       
-      - name: Publish
+      - name: publish
         run: |
           git config --global user.name "Keks"
           git config --global user.email "keks@htmlacademy.ru"

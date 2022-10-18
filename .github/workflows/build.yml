@@ -1,10 +1,10 @@
-name: Build
+name: build
 
 on:
   - pull_request
 
 jobs:
-  Start_build:
+  start_build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -13,7 +13,7 @@ jobs:
         with:
           node-version: '16.x'
 
-      - name: Build
+      - name: build
         run: |
           NODE_ENV=development npm install && npm run build
           if [[ $(find . -maxdepth 1 -type d -name 'build') == '' ]]
