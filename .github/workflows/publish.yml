@@ -13,11 +13,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: dawidd6/action-download-artifact@v2
+      - uses: actions/download-artifact@master
+        id: ${{ github.event.workflow_run.workflow_id }}
         with:
           name: build
-          workflow: ${{ github.event.workflow_run.workflow_id }}
-          workflow_conclusion: success
       
       - name: publish
         run: |
