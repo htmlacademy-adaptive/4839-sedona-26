@@ -23,7 +23,7 @@ jobs:
       - name: publish
         run: |
           echo "============="
-          echo "${{ github.event.workflow_run.workflow_id }}"
+          echo "${{ github.event.workflow_run.pull_requests }}"
           echo "============="
           git config --global user.name "Keks"
           git config --global user.email "keks@htmlacademy.ru"
