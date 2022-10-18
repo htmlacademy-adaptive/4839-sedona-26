@@ -25,14 +25,11 @@ jobs:
             cp -r source/fonts build
             cp -r source/img build
           fi
-          echo "prev.event.number=${{ github.event.number }}" > env
+          mkdir actions_artifacts
+          echo "prev.event.number=${{ github.event.number }}" > actions_artifacts/env
+          mv build actions_artifacts
       
       - uses: actions/upload-artifact@master
         with:
-          name: build
-          path: build
-
-      - uses: actions/upload-artifact@master
-        with:
-          name: env
-          path: env
+          name: actions_artifacts
+          path: actions_artifacts
