@@ -1,30 +1,21 @@
-name: build_and_publish
+name: Publish
 
 on:
-  - pull_request
+  workflow_run:
+    workflows: [Build]
+    types:
+      - completed
 
 jobs:
-  start:
+  Start_publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
-      - uses: actions/setup-node@v1
+      - actions/download-artifact@master
         with:
-          node-version: '16.x'
-
-      - name: Build
-        run: |
-          NODE_ENV=development npm install && npm run build
-          if [[ $(find . -maxdepth 1 -type d -name 'build') == '' ]]
-          then
-            mkdir build
-            cp $(find source -name '*.html') build
-            cp -r source/css build
-            cp -r source/js build
-            cp -r source/fonts build
-            cp -r source/img build
-          fi
+          name: build
+          path: build
       
       - name: Publish
         run: |

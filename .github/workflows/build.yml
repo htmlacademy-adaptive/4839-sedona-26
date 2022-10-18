@@ -1,0 +1,32 @@
+name: Build
+
+on:
+  - pull_request
+
+jobs:
+  Start_build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+
+      - name: Build
+        run: |
+          NODE_ENV=development npm install && npm run build
+          if [[ $(find . -maxdepth 1 -type d -name 'build') == '' ]]
+          then
+            mkdir build
+            cp $(find source -name '*.html') build
+            cp -r source/css build
+            cp -r source/js build
+            cp -r source/fonts build
+            cp -r source/img build
+          fi
+      
+      - actions/upload-artifact@master
+        with:
+          name: build
+          path: build
