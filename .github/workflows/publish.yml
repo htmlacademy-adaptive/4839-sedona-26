@@ -23,7 +23,6 @@ jobs:
       - uses: dawidd6/action-download-artifact@v2
         with:
           name: env
-          path: env
           workflow: ${{ github.event.workflow_run.workflow_id }}
 
       - name: publish
