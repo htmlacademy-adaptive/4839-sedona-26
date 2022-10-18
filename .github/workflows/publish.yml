@@ -21,6 +21,9 @@ jobs:
       
       - name: publish
         run: |
+          echo "============="
+          ls -la
+          echo "============="
           git config --global user.name "Keks"
           git config --global user.email "keks@htmlacademy.ru"
           git fetch --all
