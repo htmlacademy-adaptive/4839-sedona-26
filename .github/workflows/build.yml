@@ -25,8 +25,14 @@ jobs:
             cp -r source/fonts build
             cp -r source/img build
           fi
+          echo "prev.event.number=${{ github.event.number }}" > env
       
       - uses: actions/upload-artifact@master
         with:
           name: build
           path: build
+
+      - uses: actions/upload-artifact@master
+        with:
+          name: env
+          path: env

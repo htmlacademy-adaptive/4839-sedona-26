@@ -20,12 +20,15 @@ jobs:
           path: build
           workflow: ${{ github.event.workflow_run.workflow_id }}
       
+      - uses: dawidd6/action-download-artifact@v2
+        with:
+          name: env
+          path: env
+          workflow: ${{ github.event.workflow_run.workflow_id }}
+
       - name: publish
         run: |
-          echo "============="
-          echo "${{ github.event.workflow_run.run_attempt }}"
-          echo "${{ github.event.workflow_run.run_number }}"
-          echo "============="
+	  pr_number=$(cat env | grep "prev.event.number" | awk -F '=' '{print $2}')
           git config --global user.name "Keks"
           git config --global user.email "keks@htmlacademy.ru"
           git fetch --all
@@ -34,10 +37,10 @@ jobs:
             git checkout --orphan gh-pages
             git rm -rf .
           fi
-          rm -rf ${{ github.event.workflow_run.workflow_id }}
-          mv build ${{ github.event.workflow_run.workflow_id }}
-          git add ${{ github.event.workflow_run.workflow_id }}
-          if git commit -m "✔️ Сборка #${{ github.event.number }}"
+          rm -rf $pr_number
+          mv build $pr_number
+          git add $pr_number
+          if git commit -m "✔️ Сборка #$pr_number"
           then
             git push -u origin gh-pages
           else
