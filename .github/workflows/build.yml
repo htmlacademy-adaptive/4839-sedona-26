@@ -15,6 +15,9 @@ jobs:
 
       - name: build
         run: |
+          echo "============="
+          echo "${{ github.event.workflow_run.workflow_id }}"
+          echo "============="
           NODE_ENV=development npm install && npm run build
           if [[ $(find . -maxdepth 1 -type d -name 'build') == '' ]]
           then
