@@ -17,12 +17,13 @@ jobs:
       - uses: dawidd6/action-download-artifact@v2
         with:
           name: build
+          path: build
           workflow: ${{ github.event.workflow_run.workflow_id }}
       
       - name: publish
         run: |
           echo "============="
-          find / -type f -name build.zip
+          ls -la
           echo "============="
           git config --global user.name "Keks"
           git config --global user.email "keks@htmlacademy.ru"
@@ -33,7 +34,6 @@ jobs:
             git rm -rf .
           fi
           rm -rf ${{ github.event.workflow_run.workflow_id }}
-          unzip build.zip -d build
           mv build ${{ github.event.workflow_run.workflow_id }}
           git add ${{ github.event.workflow_run.workflow_id }}
           if git commit -m "✔️ Сборка #${{ github.event.number }}"
