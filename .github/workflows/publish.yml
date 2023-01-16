@@ -1,0 +1,41 @@
+name: publish
+
+on:
+  workflow_run:
+    workflows:
+      - build
+    types:
+      - completed
+
+jobs:
+  start_publish:
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'success'
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: dawidd6/action-download-artifact@v2
+        with:
+          name: actions_artifacts
+          workflow: ${{ github.event.workflow_run.workflow_id }}
+
+      - name: publish
+        run: |
+          pr_number=$(cat env | grep "prev.event.number" | awk -F '=' '{print $2}')
+          git config --global user.name "Keks"
+          git config --global user.email "keks@htmlacademy.ru"
+          git fetch --all
+          if ! git checkout -t origin/gh-pages
+          then
+            git checkout --orphan gh-pages
+            git rm -rf .
+          fi
+          rm -rf $pr_number
+          mv build $pr_number
+          git add $pr_number
+          if git commit -m "✔️ Сборка #$pr_number"
+          then
+            git push -u origin gh-pages
+          else
+            echo 'Nothing to commit and push'
+          fi
