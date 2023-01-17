@@ -29,11 +29,11 @@ jobs:
           fi
 
       - name: Publish to Github Pages
+        env:
+          github-token: ${{ secrets.GH_ACTIONS_TOKEN }}
         run: |
-          echo ${{ secrets.GH_ACTIONS_TOKEN }}
           pr_number=${{ github.event.number }}
-          git config --global user.name "Keks"
-          git config --global user.email "keks@htmlacademy.ru"
+          git config --global user.name "keksobot"
           git fetch --all
           if ! git checkout -t origin/gh-pages
           then
