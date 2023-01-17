@@ -1,27 +1,37 @@
-name: publish
+name: Publish
 
 on:
-  workflow_run:
-    workflows:
-      - build
-    types:
-      - completed
+  - pull_request
 
 jobs:
   start_publish:
     runs-on: ubuntu-latest
     if: github.event.workflow_run.conclusion == 'success'
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
-      - uses: dawidd6/action-download-artifact@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
         with:
-          name: actions_artifacts
-          workflow: ${{ github.event.workflow_run.workflow_id }}
+          node-version: '16.x'
 
-      - name: publish
+      - name: Build Project
         run: |
-          pr_number=$(cat env | grep "prev.event.number" | awk -F '=' '{print $2}')
+          NODE_ENV=development npm ci && npm run build
+          if [[ $(find . -maxdepth 1 -type d -name 'build') == '' ]]
+          then
+            mkdir build
+            cp $(find source -name '*.html') build
+            cp -r source/css build
+            cp -r source/js build
+            cp -r source/fonts build
+            cp -r source/img build
+          fi
+
+      - name: Publish to Github Pages
+        run: |
+          pr_number=${{ github.event.number }}
           git config --global user.name "Keks"
           git config --global user.email "keks@htmlacademy.ru"
           git fetch --all
@@ -30,10 +40,10 @@ jobs:
             git checkout --orphan gh-pages
             git rm -rf .
           fi
-          rm -rf $pr_number
-          mv build $pr_number
-          git add $pr_number
-          if git commit -m "✔️ Сборка #$pr_number"
+          rm -rf ${{ github.event.number }}
+          mv build ${{ github.event.number }}
+          git add ${{ github.event.number }}
+          if git commit -m "✔️ Сборка #${{ github.event.number }}"
           then
             git push -u origin gh-pages
           else
