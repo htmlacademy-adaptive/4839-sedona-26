@@ -40,4 +40,4 @@ jobs:
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: |
-            Я собрал ваш пулреквест. Посмотреть можно https://htmlacademy-adaptive.github.io/4839-sedona-26/${{ github.event.number }}
+            Я собрал ваш пулреквест. Посмотреть можно https\://htmlacademy-adaptive.github.io/4839-sedona-26/${{ github.event.number }}
