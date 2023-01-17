@@ -4,7 +4,7 @@ on:
   - pull_request
 
 jobs:
-  start_publish:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -30,6 +30,7 @@ jobs:
 
       - name: Publish to Github Pages
         run: |
+          echo ${{ secrets.GH_ACTIONS_TOKEN }}
           pr_number=${{ github.event.number }}
           git config --global user.name "Keks"
           git config --global user.email "keks@htmlacademy.ru"
