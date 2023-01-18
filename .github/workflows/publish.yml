@@ -1,4 +1,4 @@
-name: publish
+name: Publish
 
 on:
   workflow_run:
@@ -8,7 +8,7 @@ on:
       - completed
 
 jobs:
-  start_publish:
+  publish:
     runs-on: ubuntu-latest
     if: github.event.workflow_run.conclusion == 'success'
     steps:
@@ -19,21 +19,24 @@ jobs:
           name: actions_artifacts
           workflow: ${{ github.event.workflow_run.workflow_id }}
 
-      - name: publish
+      - name: Define PR
         run: |
-          pr_number=$(cat env | grep "prev.event.number" | awk -F '=' '{print $2}')
-          git config --global user.name "Keks"
-          git config --global user.email "keks@htmlacademy.ru"
+          echo "PR=$(cat env | grep "prev.event.number" | awk -F '=' '{print $2}')" >> $GITHUB_ENV
+
+      - name: Publish
+        run: |
+          git config --global user.name "keksobot"
+          git config --global user.email "github+keksobot@htmlacademy.ru"
           git fetch --all
           if ! git checkout -t origin/gh-pages
           then
             git checkout --orphan gh-pages
             git rm -rf .
           fi
-          rm -rf $pr_number
-          mv build $pr_number
-          git add $pr_number
-          if git commit -m "✔️ Сборка #$pr_number"
+          rm -rf ${{ env.PR }}
+          mv build ${{ env.PR }}
+          git add ${{ env.PR }}
+          if git commit -m "✔️ Сборка #${{ env.PR }}"
           then
             git push -u origin gh-pages
           else
