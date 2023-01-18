@@ -1,41 +1,39 @@
-name: publish
+name: Publish
 
 on:
-  workflow_run:
-    workflows:
-      - build
-    types:
-      - completed
+  - pull_request
 
 jobs:
-  start_publish:
+  publish:
     runs-on: ubuntu-latest
-    if: github.event.workflow_run.conclusion == 'success'
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
-      - uses: dawidd6/action-download-artifact@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
         with:
-          name: actions_artifacts
-          workflow: ${{ github.event.workflow_run.workflow_id }}
+          node-version: '16.x'
 
-      - name: publish
+      - name: Build Project
         run: |
-          pr_number=$(cat env | grep "prev.event.number" | awk -F '=' '{print $2}')
-          git config --global user.name "Keks"
-          git config --global user.email "keks@htmlacademy.ru"
-          git fetch --all
-          if ! git checkout -t origin/gh-pages
+          NODE_ENV=development npm ci && npm run build
+          if [[ $(find . -maxdepth 1 -type d -name 'build') == '' ]]
           then
-            git checkout --orphan gh-pages
-            git rm -rf .
+            mkdir build
+            cp $(find source -name '*.html') build
+            cp -r source/css build
+            cp -r source/js build
+            cp -r source/fonts build
+            cp -r source/img build
           fi
-          rm -rf $pr_number
-          mv build $pr_number
-          git add $pr_number
-          if git commit -m "✔️ Сборка #$pr_number"
-          then
-            git push -u origin gh-pages
-          else
-            echo 'Nothing to commit and push'
-          fi
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build
+          token: 1234
+          git-config-name: keksobot
+          git-config-email: github+keksobot@htmlacademy.ru
+          target-folder: ${{ github.event.number }}
+          commit-message: "✔️ Сборка #${{ github.event.number }}"
