@@ -1,10 +1,10 @@
-name: build
+name: Build
 
 on:
   - pull_request
 
 jobs:
-  start_build:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -28,7 +28,7 @@ jobs:
           mkdir actions_artifacts
           echo "prev.event.number=${{ github.event.number }}" > actions_artifacts/env
           mv build actions_artifacts
-      
+
       - uses: actions/upload-artifact@master
         with:
           name: actions_artifacts
